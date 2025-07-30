@@ -159,17 +159,17 @@ export default function HomePage() {
             </Link>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="flex flex-col md:flex-row justify-center items-center gap-6 text-white text-sm"
-          >
-            <span>New release</span>
-            <span>Preview</span>
-            <span>Get Template</span>
-            <span>Made in France</span>
-          </motion.div>
+         <motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ delay: 1, duration: 0.8 }}
+  className="flex flex-col md:flex-row justify-center items-center gap-6 text-white text-sm"
+>
+  <span>Award-Winning Service</span>
+  <span>Verified Listings</span>
+  <span>Secure Transactions</span>
+  <span>Satisfaction Guarantee</span>
+</motion.div>
         </div>
       </section>
 

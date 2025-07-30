@@ -93,7 +93,7 @@ export function Navbar() {
 
             {user && (
               <motion.div variants={navItemVariants} whileHover="hover" whileTap="tap">
-                <Link href="/properties/create" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors">
+                <Link href="/properties/new" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors">
                   <Plus className="h-5 w-5" />
                   <span className="text-sm font-medium">List Property</span>
                 </Link>
