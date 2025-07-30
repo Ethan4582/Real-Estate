@@ -57,23 +57,6 @@ export default function NewPropertyPage() {
     }))
   }
 
-  const addImageUrl = () => {
-    const url = prompt("Enter image URL:")
-    if (url) {
-      setFormData((prev) => ({
-        ...prev,
-        images: [...prev.images, url],
-      }))
-    }
-  }
-
-  const removeImage = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      images: prev.images.filter((_, i) => i !== index),
-    }))
-  }
-
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="bg-white rounded-lg shadow-md p-6">
@@ -225,14 +208,38 @@ export default function NewPropertyPage() {
             <label className="block text-sm font-medium text-gray-700 mb-2">Property Images</label>
             <div className="space-y-2">
               {formData.images.map((url, index) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <input type="url" value={url} readOnly className="input-field flex-1" />
-                  <button type="button" onClick={() => removeImage(index)} className="btn-secondary">
+                <div key={index} className="flex items-center gap-2">
+                  <input
+                    type="url"
+                    value={url}
+                    onChange={e => {
+                      const newImages = [...formData.images]
+                      newImages[index] = e.target.value
+                      setFormData(prev => ({ ...prev, images: newImages }))
+                    }}
+                    className="input-field flex-1"
+                    placeholder="Enter image URL"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({
+                      ...prev,
+                      images: prev.images.filter((_, i) => i !== index)
+                    }))}
+                    className="btn-secondary"
+                  >
                     Remove
                   </button>
                 </div>
               ))}
-              <button type="button" onClick={addImageUrl} className="btn-secondary flex items-center space-x-2">
+              <button
+                type="button"
+                onClick={() => setFormData(prev => ({
+                  ...prev,
+                  images: [...prev.images, ""]
+                }))}
+                className="btn-secondary flex items-center space-x-2"
+              >
                 <Upload className="h-4 w-4" />
                 <span>Add Image URL</span>
               </button>

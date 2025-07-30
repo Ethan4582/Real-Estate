@@ -41,7 +41,12 @@ export default function ManagePropertiesPage() {
               </div>
               <div className="flex space-x-2">
                 <Link href={`/properties/${property.id}/edit`} className="btn-secondary">Edit</Link>
-                <button onClick={() => handleDelete(property.id)} className="btn-secondary">Delete</button>
+                <button
+                  onClick={() => handleDelete(property.id)}
+                  className="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition"
+                >
+                  Delete
+                </button>
               </div>
             </li>
           ))}

@@ -1,10 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Upload } from "lucide-react"
 
-export default function EditPropertyPage({ params }: { params: { id: string } }) {
+export default function EditPropertyPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const router = useRouter()
@@ -24,12 +26,11 @@ export default function EditPropertyPage({ params }: { params: { id: string } })
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await fetch(`/api/properties/${params.id}`)
+        const response = await fetch(`/api/properties/${id}`)
         if (!response.ok) {
           throw new Error("Failed to fetch property")
         }
         const data = await response.json()
-        
         setForm({
           title: data.title || "",
           description: data.description || "",
@@ -50,23 +51,22 @@ export default function EditPropertyPage({ params }: { params: { id: string } })
     }
 
     fetchProperty()
-  }, [params.id])
+  }, [id])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
   }
 
+  // Updated addImageUrl function
   const addImageUrl = () => {
-    const url = prompt("Enter image URL:")
-    if (url && url.trim() !== "") {
-      setForm(prev => ({
-        ...prev,
-        images: [...prev.images, url.trim()],
-      }))
-    }
+    setForm(prev => ({
+      ...prev,
+      images: [...prev.images, ""]
+    }))
   }
 
+  // Remove image by index
   const removeImage = (index: number) => {
     setForm(prev => ({
       ...prev,
@@ -77,9 +77,8 @@ export default function EditPropertyPage({ params }: { params: { id: string } })
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
-    
     try {
-      const response = await fetch(`/api/properties/${params.id}`, {
+      const response = await fetch(`/api/properties/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -95,7 +94,7 @@ export default function EditPropertyPage({ params }: { params: { id: string } })
         throw new Error("Failed to update property")
       }
 
-      router.push(`/properties/${params.id}`)
+      router.push(`/properties/${id}`)
     } catch (err) {
       setError("Failed to update property. Please try again.")
       console.error(err)
@@ -288,23 +287,28 @@ export default function EditPropertyPage({ params }: { params: { id: string } })
             <div className="space-y-3">
               {form.images.map((url, index) => (
                 <div key={index} className="flex items-center gap-2">
-                  <input 
-                    type="url" 
-                    value={url} 
-                    readOnly 
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50" 
+                  <input
+                    type="url"
+                    value={url}
+                    onChange={e => {
+                      const newImages = [...form.images];
+                      newImages[index] = e.target.value;
+                      setForm(prev => ({ ...prev, images: newImages }));
+                    }}
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter image URL"
                   />
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => removeImage(index)}
-                    className="px-3 py-2 bg-red-50 text-red-600 rounded-md hover:bg-red-100"
+                    className="px-3 py-2 bg-red-50 text-red-600 rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500"
                   >
                     Remove
                   </button>
                 </div>
               ))}
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={addImageUrl}
                 className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >

@@ -9,7 +9,9 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Property Marketplace",
   description: "Find your perfect property or list your own",
-    generator: 'v0.dev'
+  openGraph: {
+    images: ["/logo.png"],
+  },
 }
 
 export default function RootLayout({
