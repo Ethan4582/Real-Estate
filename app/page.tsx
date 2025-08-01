@@ -5,27 +5,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { PropertyCard } from "@/components/PropertyCard";
-import { prisma } from "@/lib/prisma";
 import { Home, Search, ArrowRight, Check, Star } from "lucide-react";
 import { useEffect } from "react";
-
-async function getRecentProperties() {
-  try {
-    const properties = await prisma.property.findMany({
-      take: 4,
-      orderBy: { createdAt: "desc" },
-      include: {
-        owner: {
-          select: { id: true, name: true, email: true },
-        },
-      },
-    });
-    return properties;
-  } catch (error) {
-    console.error("Failed to fetch properties:", error);
-    return [];
-  }
-}
 
 export default function HomePage() {
   const properties = [
