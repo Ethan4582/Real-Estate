@@ -1,4 +1,3 @@
-// app/page.tsx
 "use client";
 
 import { motion } from "framer-motion";
@@ -8,58 +7,78 @@ import { PropertyCard } from "@/components/PropertyCard";
 import { Home, Search, ArrowRight, Check, Star } from "lucide-react";
 import { useEffect } from "react";
 
-export default function HomePage() {
-  const properties = [
-    {
+const properties = [
+  {
+    id: "1",
+    title: "Cozy Studio Apartment",
+    location: "Downtown, New York",
+    price: 1800,
+    bedrooms: 1,
+    bathrooms: 1,
+    area: 600,
+    images: ["/4.png"],
+    description: "Modern studio in the heart of the city with amazing views.",
+    type: "Apartment",
+    owner: {
       id: "1",
-      title: "Cozy Studio Apartment",
-      location: "Downtown, New York",
-      price: 1800,
-      bedrooms: 1,
-      bathrooms: 1,
-      area: 600,
-      images: ["/4.png"],
-      description: "Modern studio in the heart of the city with amazing views.",
-      type: "Apartment",
-    },
-    {
+      name: "John Doe",
+      email: "john@example.com"
+    }
+  },
+  {
+    id: "2",
+    title: "Luxury Condo",
+    location: "Beverly Hills, CA",
+    price: 750000,
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 1800,
+    images: ["/5.png"],
+    description: "Stunning condo with premium finishes and amenities.",
+    type: "Condo",
+    owner: {
       id: "2",
-      title: "Luxury Condo",
-      location: "Beverly Hills, CA",
-      price: 750000,
-      bedrooms: 3,
-      bathrooms: 2,
-      area: 1800,
-      images: ["/5.png"],
-      description: "Stunning condo with premium finishes and amenities.",
-      type: "Condo",
-    },
-    {
+      name: "Jane Smith",
+      email: "jane@example.com"
+    }
+  },
+  {
+    id: "3",
+    title: "Suburban Family Home",
+    location: "Greenville, TX",
+    price: 450000,
+    bedrooms: 4,
+    bathrooms: 3,
+    area: 2400,
+    images: ["/6.png"],
+    description: "Spacious family home in a quiet neighborhood.",
+    type: "House",
+    owner: {
       id: "3",
-      title: "Suburban Family Home",
-      location: "Greenville, TX",
-      price: 450000,
-      bedrooms: 4,
-      bathrooms: 3,
-      area: 2400,
-      images: ["/6.png"],
-      description: "Spacious family home in a quiet neighborhood.",
-      type: "House",
-    },
-    {
+      name: "Mike Johnson",
+      email: "mike@example.com"
+    }
+  },
+  {
+    id: "4",
+    title: "Modern Loft",
+    location: "Soho, New York",
+    price: 3200,
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 1200,
+    images: ["/7.png"],
+    description: "Industrial-chic loft with exposed brick and high ceilings.",
+    type: "Loft",
+    owner: {
       id: "4",
-      title: "Modern Loft",
-      location: "Soho, New York",
-      price: 3200,
-      bedrooms: 2,
-      bathrooms: 2,
-      area: 1200,
-      images: ["/7.png"],
-      description: "Industrial-chic loft with exposed brick and high ceilings.",
-      type: "Loft",
-    },
-  ];
+      name: "Sarah Williams",
+      email: "sarah@example.com"
+    }
+  }
+];
 
+export default function HomePage() {
   useEffect(() => {
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -140,17 +159,17 @@ export default function HomePage() {
             </Link>
           </motion.div>
 
-         <motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 1, duration: 0.8 }}
-  className="flex flex-col md:flex-row justify-center items-center gap-6 text-white text-sm"
->
-  <span>Award-Winning Service</span>
-  <span>Verified Listings</span>
-  <span>Secure Transactions</span>
-  <span>Satisfaction Guarantee</span>
-</motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.8 }}
+            className="flex flex-col md:flex-row justify-center items-center gap-6 text-white text-sm"
+          >
+            <span>Award-Winning Service</span>
+            <span>Verified Listings</span>
+            <span>Secure Transactions</span>
+            <span>Satisfaction Guarantee</span>
+          </motion.div>
         </div>
       </section>
 

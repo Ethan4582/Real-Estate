@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { LogIn } from "lucide-react"
 import { motion } from "framer-motion"
 
 export default function LoginPage() {
