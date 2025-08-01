@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
 import { encrypt } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import jwt from "jsonwebtoken"
 
 export async function POST(request: NextRequest) {
   try {
@@ -37,8 +38,18 @@ export async function POST(request: NextRequest) {
 
     const session = await encrypt(sessionData)
 
+    // Create JWT token
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { expiresIn: "1d" })
+
     // Set cookie
-    const response = NextResponse.json({ message: "Login successful", user: sessionData }, { status: 200 })
+    const response = NextResponse.json(
+      {
+        message: "Login successful",
+        user: sessionData,
+        token,
+      },
+      { status: 200 }
+    )
 
     response.cookies.set("session", session, {
       httpOnly: true,
